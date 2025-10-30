@@ -8,6 +8,7 @@ import { toast } from '@/components/system/toast'
 import Api from "@/lib/api"
 import { getErrorMessage } from "@/lib/apiHelper"
 import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 interface NicknameMessage {
     status: 'success' | 'error' | 'before'
@@ -15,6 +16,8 @@ interface NicknameMessage {
 }
 
 export default function RegisterPage() {
+    const router = useRouter()
+
     const [ nickname, setNickname ] = useState('')
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
@@ -44,6 +47,9 @@ export default function RegisterPage() {
             }
 
             await Api().addUser(nickname, email, password, repassword)
+            toast.success('회원가입이 완료되었습니다.')
+
+            router.push('/login/email')
         } catch (error: unknown) {
             const message = getErrorMessage(error)
             toast.error(message)

@@ -4,9 +4,12 @@ import AppShell from "@/components/grid/appShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginEmailPage() {
     const router = useRouter()
+
+    const [ token, setToken ] = useState('')
 
     return (
         <AppShell>
@@ -20,8 +23,11 @@ export default function LoginEmailPage() {
                     <div> 비밀번호 </div>
                     <Input></Input>
                 </div>
+                <Button> 로그인 </Button>
 
-
+                <div>
+                    토큰 값 : { token }
+                </div>
 
                 <div>
                     <div> 아직 계정이 없으신가요? </div>
