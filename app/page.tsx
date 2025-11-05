@@ -2,9 +2,6 @@
 
 import Header from "@/components/grid/header"
 import TranslateScroll from "@/components/scroll/translateScroll"
-import { Button } from "@/components/ui/button"
-import { Grip } from "lucide-react"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 export default function Home() {
