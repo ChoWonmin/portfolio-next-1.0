@@ -3,9 +3,13 @@
 import AppShell from "@/components/grid/appShell"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
+import KakaoLoginButton from "@/components/brand/kakaoLoginButton"
 
 export default function ClientPage() {
     const router = useRouter()
+
+    
 
     return (
         <AppShell>
@@ -14,7 +18,9 @@ export default function ClientPage() {
                     <Button onClick={() => router.push('/login/email')}> 
                         <div className="text-2xl font-semibold"> 이메일로 로그인 </div>
                     </Button>
-                    <Button> 카카오 로그인 </Button>
+                    
+                    <KakaoLoginButton></KakaoLoginButton>
+                    
                     <Button> 네이버 로그인 </Button>
                 </div>
             </div>

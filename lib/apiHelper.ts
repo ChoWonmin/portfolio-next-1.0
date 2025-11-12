@@ -39,12 +39,3 @@ export function getErrorMessage(
 
     return fallback
 }
-
-function hasResponseData(x: unknown): x is { response: { data: unknown } } {
-    return (
-        isRecord(x) &&
-        'reponse' in x &&
-        isRecord ((x as Record<string, unknown>).reponse) &&
-        'data' in (x as { response: Record<string, unknown> }).response
-    )
-}
