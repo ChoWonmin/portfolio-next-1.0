@@ -6,10 +6,11 @@ import { getCookie } from "cookies-next"
 export interface ApiType {
     getUser(nickname: string): Promise<User>
     getUsers(): Promise<User[]>
-    addUser(nickname: string, email: string, password: string, repassword: string): Promise<number>
+    addUser(nickname: string, email: string, password: string, repassword: string, accessToken: string): Promise<string>
     isValidNickname(nickname: string): Promise<boolean>
     loginByEmail(email: string, password: string): Promise<string>
     loginByKakao(code: string, origin: string): Promise<string>
+    me(accessToken?: string): Promise<User>
 
     getProjects(): Promise<Project[]>
 }
@@ -50,13 +51,17 @@ export default function Api(): ApiType {
         async getUsers(): Promise<User[]> {
             return await api.get('/get-users')
         },
-        async addUser(nickname: string, email: string, password: string, repassword: string) {
+        async addUser(nickname: string, email: string, password: string, repassword: string, accessToken: string) {
             return await api.post('/add-user', { 
                 nickname, email, password, repassword
+            }, {
+                headers: {
+                    'Access-Token': accessToken
+                }
             })
         },
         async isValidNickname(nickname: string): Promise<boolean> {
-            return await api.get('/is-valid-nickname', {
+            return await api.get('/public/is-valid-nickname', {
                 params: { nickname }
             })
         },
@@ -70,8 +75,15 @@ export default function Api(): ApiType {
                 code, origin
             })
         },
+        async me(accessToken?: string): Promise<User> {
+            const token = accessToken || (getCookie('accessToken') || '') as string
 
-
+            return await api.post('/me', {}, {
+                headers: {
+                    "ACCESS-TOKEN": token
+                }
+            })
+        },
         async getProjects(): Promise<Project[]> {
             return await api.get("/get-projects")
         },
